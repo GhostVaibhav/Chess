@@ -33,6 +33,16 @@ const int board[8][8] = {{0,1,2,3,4,5,6,7},
 Texture pieces_text[12];
 // Loading the sprites in the sprite array
 Sprite pieces[32];
+void set_position() {
+    // Main drawing loop that should be executed every single frame
+    for(int i = 0 ; i < 8 ; i++) {
+        for(int j = 0 ; j < 8 ; j++) {
+            if(board[i][j] != 0 || (i == 0 && j == 0)) {
+                pieces[board[i][j]].setPosition({X+j*spacing,Y+i*spacing});
+            }
+        }
+    }
+}
 int main()
 {
     // Font used in the game
@@ -85,6 +95,13 @@ int main()
         else
             pieces[i].setTexture(pieces_text[4]);
     }
+
+    bool move = false;
+    int n = 0;
+    Vector2f oldPos;
+    Vector2f d;
+    set_position();
+
     // Main game loop
     while (window.isOpen())
     {
@@ -117,15 +134,27 @@ int main()
             }
             else if (event.type == Event::MouseButtonPressed)
             {
-                for(int i = 0 ; i < 32 ; i++) {
-                    if(pieces[i].getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition(window).y))
-                        std::cout << "Selected\n";
+                if (event.key.code == Mouse::Left) {
+                    for(int i = 0 ; i < 32 ; i++) {
+                        if(pieces[i].getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition(window).y)) {
+                            move = true;
+                            n = i;
+                            d.x = Mouse::getPosition(window).x - pieces[i].getPosition().x;
+                            d.y = Mouse::getPosition(window).y - pieces[i].getPosition().y;
+                            oldPos = pieces[n].getPosition();
+                        }
+                    }
                 }
-                std::cout << std::endl;
             }
             else if (event.type == Event::MouseButtonReleased)
             {
+                if (event.key.code == Mouse::Left) {
+                    move = false;
+                }
             }
+        }
+        if(move) {
+            pieces[n].setPosition(Mouse::getPosition(window).x-d.x,Mouse::getPosition(window).y-d.y);
         }
         // Clearing with the board color so that it looks good :)
         window.clear(boardColor);
@@ -138,15 +167,8 @@ int main()
         window.draw(mouse_coord);
         // Drawing the chess board
         window.draw(chessBoard);
-        // Main drawing loop that should be executed every single frame
-        for(int i = 0 ; i < 8 ; i++) {
-            for(int j = 0 ; j < 8 ; j++) {
-                if(board[i][j] != 0 || (i == 0 && j == 0)) {
-                        pieces[board[i][j]].setPosition({X+j*spacing,Y+i*spacing});
-                        window.draw(pieces[board[i][j]]);
-                }
-            }
-        }
+        for(int i = 0 ; i < 32 ; i++)
+            window.draw(pieces[i]);
         // Displaying all the sprites that were drawn on the window
         window.display();
     }
