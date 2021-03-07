@@ -124,11 +124,13 @@ int main()
                     }
                 }
                 if (event.key.code == Keyboard::R) {
-                    for(int i = 0 ; i < 32 ; i++) {
-                        RectangleShape rec({pieces[i].getGlobalBounds().height,pieces[i].getGlobalBounds().width});
-                        rec.setPosition({pieces[i].getGlobalBounds().left,pieces[i].getGlobalBounds().top});
-                        rec.setFillColor(Color::Black);
-                        window.draw(rec);
+                    for(int i = 0 ; i < 8 ; i++) {
+                        for(int j = 0 ; j < 8 ; j++) {
+                            RectangleShape rec({48,48});
+                            rec.setPosition({X+j*spacing,Y+i*spacing});
+                            rec.setFillColor(Color::Black);
+                            window.draw(rec);
+                        }
                     }
                 }
             }
@@ -150,6 +152,17 @@ int main()
             {
                 if (event.key.code == Mouse::Left) {
                     move = false;
+                    if (!chessBoard.getGlobalBounds().contains(Mouse::getPosition(window).x-d.x,Mouse::getPosition(window).y-d.y))
+                        pieces[n].setPosition(oldPos);
+                    else {
+                        for(int i = 0 ; i < 8 ; i++) {
+                            for(int j = 0 ; j < 8 ; j++) {
+                                if((pieces[n].getPosition().x > X+j*spacing && pieces[n].getPosition().x < X+(j+1)*spacing) && (pieces[n].getPosition().y > Y+i*spacing && pieces[n].getPosition().y < Y+(i+1)*spacing)) {
+                                    pieces[n].setPosition({X+j*spacing,Y+i*spacing});
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -167,6 +180,7 @@ int main()
         window.draw(mouse_coord);
         // Drawing the chess board
         window.draw(chessBoard);
+        // Drawing the pieces on the chess board
         for(int i = 0 ; i < 32 ; i++)
             window.draw(pieces[i]);
         // Displaying all the sprites that were drawn on the window
