@@ -52,7 +52,7 @@ int main()
     RenderWindow window(VideoMode(1200, 600), "Chess");
     // Limiting the framerate to 60 to decrease the load from GPU
     window.setFramerateLimit(60);
-    
+
     // Creating a texture and assigning an image to it
     Texture text;
     text.loadFromFile(board_path);
@@ -153,10 +153,23 @@ int main()
                         for(int i = 0 ; i < 8 ; i++) {
                             for(int j = 0 ; j < 8 ; j++) {
                                 if((Mouse::getPosition(window).x > X+j*spacing && Mouse::getPosition(window).x < X+(j+1)*spacing) && (Mouse::getPosition(window).y > Y+i*spacing && Mouse::getPosition(window).y < Y+(i+1)*spacing)) {
-                                    pieces[n].setPosition({X+j*spacing,Y+i*spacing});
+                                    newPos = Vector2f({X+j*spacing,Y+i*spacing});
+                                    break;
                                 }
                             }
                         }
+                        bool matching = false;
+                        int temp;
+                        for(int i = 0 ; i < 32 ; i++) {
+                            if(pieces[i].getPosition().x == newPos.x && pieces[i].getPosition().y == newPos.y) {
+                                matching = true;
+                                temp = i;
+                                break;
+                            }
+                        }
+                        if(matching)
+                            pieces[temp].setPosition({-100,-100});
+                        pieces[n].setPosition(newPos);
                     }
                 }
             }
