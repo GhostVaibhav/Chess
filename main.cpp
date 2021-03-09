@@ -98,7 +98,7 @@ int main()
 
     bool move = false;
     int n = 0;
-    Vector2f oldPos;
+    Vector2f oldPos,newPos;
     Vector2f d;
     set_position();
 
@@ -137,27 +137,22 @@ int main()
             else if (event.type == Event::MouseButtonPressed)
             {
                 if (event.key.code == Mouse::Left) {
-                    for(int i = 0 ; i < 32 ; i++) {
-                        if(pieces[i].getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition(window).y)) {
-                            move = true;
-                            n = i;
-                            d.x = Mouse::getPosition(window).x - pieces[i].getPosition().x;
-                            d.y = Mouse::getPosition(window).y - pieces[i].getPosition().y;
-                            oldPos = pieces[n].getPosition();
+                    if(!move) {
+                        for(int i = 0 ; i < 32 ; i++) {
+                            if(pieces[i].getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition (window).y)) {
+                                move = true;
+                                n = i;
+                                d.x = Mouse::getPosition(window).x - pieces[i].getPosition().x;
+                                d.y = Mouse::getPosition(window).y - pieces[i].getPosition().y;
+                                oldPos = pieces[n].getPosition();
+                            }
                         }
                     }
-                }
-            }
-            else if (event.type == Event::MouseButtonReleased)
-            {
-                if (event.key.code == Mouse::Left) {
-                    move = false;
-                    if (!chessBoard.getGlobalBounds().contains(Mouse::getPosition(window).x-d.x,Mouse::getPosition(window).y-d.y))
-                        pieces[n].setPosition(oldPos);
                     else {
+                        move = false;
                         for(int i = 0 ; i < 8 ; i++) {
                             for(int j = 0 ; j < 8 ; j++) {
-                                if((pieces[n].getPosition().x > X+j*spacing && pieces[n].getPosition().x < X+(j+1)*spacing) && (pieces[n].getPosition().y > Y+i*spacing && pieces[n].getPosition().y < Y+(i+1)*spacing)) {
+                                if((Mouse::getPosition(window).x > X+j*spacing && Mouse::getPosition(window).x < X+(j+1)*spacing) && (Mouse::getPosition(window).y > Y+i*spacing && Mouse::getPosition(window).y < Y+(i+1)*spacing)) {
                                     pieces[n].setPosition({X+j*spacing,Y+i*spacing});
                                 }
                             }
@@ -165,9 +160,6 @@ int main()
                     }
                 }
             }
-        }
-        if(move) {
-            pieces[n].setPosition(Mouse::getPosition(window).x-d.x,Mouse::getPosition(window).y-d.y);
         }
         // Clearing with the board color so that it looks good :)
         window.clear(boardColor);
