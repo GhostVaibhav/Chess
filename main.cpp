@@ -159,17 +159,24 @@ int main()
                             }
                         }
                         bool matching = false;
-                        int temp;
-                        for(int i = 0 ; i < 32 ; i++) {
+                        int i;
+                        for(i = 0 ; i < 32 ; i++) {
                             if(pieces[i].getPosition().x == newPos.x && pieces[i].getPosition().y == newPos.y) {
                                 matching = true;
-                                temp = i;
                                 break;
                             }
                         }
                         if(matching)
-                            pieces[temp].setPosition({-100,-100});
-                        pieces[n].setPosition(newPos);
+                            pieces[i].setPosition({-100,-100});
+                        auto dist = newPos - oldPos;
+                        for(int i = 0 ; i < 40 ; i++) {
+                            window.clear(boardColor);
+                            window.draw(chessBoard);
+                            pieces[n].move(dist.x/40,dist.y/40);
+                            for(int j = 0 ; j < 32 ; j++)
+                                window.draw(pieces[j]);
+                            window.display();
+                        }
                     }
                 }
             }
