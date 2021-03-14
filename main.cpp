@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace sf;
 // For spacing the board and the pieces
 #define X 702.0f
@@ -128,7 +128,9 @@ int main()
                         for(int j = 0 ; j < 8 ; j++) {
                             RectangleShape rec({48,48});
                             rec.setPosition({X+j*spacing,Y+i*spacing});
-                            rec.setFillColor(Color::Black);
+                            rec.setFillColor(Color::Transparent);
+                            rec.setOutlineColor(Color::Green);
+                            rec.setOutlineThickness(1.0f);
                             window.draw(rec);
                         }
                     }
@@ -158,16 +160,6 @@ int main()
                                 }
                             }
                         }
-                        bool matching = false;
-                        int i;
-                        for(i = 0 ; i < 32 ; i++) {
-                            if(pieces[i].getPosition().x == newPos.x && pieces[i].getPosition().y == newPos.y) {
-                                matching = true;
-                                break;
-                            }
-                        }
-                        if(matching)
-                            pieces[i].setPosition({-100,-100});
                         auto dist = newPos - oldPos;
                         for(int i = 0 ; i < 40 ; i++) {
                             window.clear(boardColor);
@@ -176,6 +168,12 @@ int main()
                             for(int j = 0 ; j < 32 ; j++)
                                 window.draw(pieces[j]);
                             window.display();
+                        }
+                        for(int i = 0 ; i < 32 ; i++) {
+                            if(pieces[i].getPosition() == newPos) {
+                                pieces[i].setPosition({-100,-100});
+                                break;
+                            }
                         }
                     }
                 }
