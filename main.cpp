@@ -160,6 +160,12 @@ int main()
                                 }
                             }
                         }
+                        for(int i = 0 ; i < 32 ; i++) {
+                            if(pieces[i].getPosition() == newPos) {
+                                pieces[i].setPosition({-100,-100});
+                                break;
+                            }
+                        }
                         auto dist = newPos - oldPos;
                         for(int i = 0 ; i < 40 ; i++) {
                             window.clear(boardColor);
@@ -169,12 +175,7 @@ int main()
                                 window.draw(pieces[j]);
                             window.display();
                         }
-                        for(int i = 0 ; i < 32 ; i++) {
-                            if(pieces[i].getPosition() == newPos) {
-                                pieces[i].setPosition({-100,-100});
-                                break;
-                            }
-                        }
+                        pieces[n].setPosition(newPos);
                     }
                 }
             }
