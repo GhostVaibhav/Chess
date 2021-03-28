@@ -6,7 +6,7 @@ int main(int argc,char* argv[]) {
         string cmd;
         cmd = "g++ -Isrc/include -c " + fileName + ".cpp";
         system(cmd.c_str());
-        cmd = "g++ " + fileName + ".o -o " + fileName + " -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system";
+        cmd = "g++ " + fileName + ".o -o " + fileName + " -Lsrc/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system icon.res";
         system(cmd.c_str());
         cmd = "del " + fileName + ".o";
         system(cmd.c_str());
