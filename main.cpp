@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <bits/stdc++.h>
 using namespace sf;
 // For spacing the board and the pieces
@@ -21,6 +22,7 @@ std::string paths[] {"images\\white-rook.png","images\\white-knight.png","images
 //                                {0,0,0,0,0,0,0,0},
 //                                {6,6,6,6,6,6,6,6},
 //                                {1,2,3,4,5,3,2,1}};
+// Updated the layout of the board
 const int board[8][8] = {{0,1,2,3,4,5,6,7},
                          {8,9,10,11,12,13,14,15},
                          {0,0,0,0,0,0,0,0},
@@ -45,6 +47,14 @@ void set_position() {
 }
 int main()
 {
+    // Arp sound used in the background (will probably change in the future)
+    SoundBuffer buffer;
+    if(!buffer.loadFromFile("Audio/Arp.wav"))
+        std::cout << "Error" << std::endl;
+    Sound sound;
+    sound.setLoop(true);
+    sound.setVolume(10.0f);
+    sound.setBuffer(buffer);
     // Font used in the game
     Font game_font;
     game_font.loadFromFile("Fonts/Montserrat-Regular.ttf");
@@ -52,7 +62,6 @@ int main()
     RenderWindow window(VideoMode(1200, 600), "Chess");
     // Limiting the framerate to 60 to decrease the load from GPU
     window.setFramerateLimit(60);
-
     // Creating a texture and assigning an image to it
     Texture text;
     text.loadFromFile(board_path);
@@ -96,12 +105,14 @@ int main()
             pieces[i].setTexture(pieces_text[4]);
     }
 
+    // Some declarations
     bool move = false;
     int n = 0;
     Vector2f oldPos,newPos;
     Vector2f d;
     set_position();
 
+    sound.play();
     // Main game loop
     while (window.isOpen())
     {
@@ -109,6 +120,7 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            // If we cross thw window then it should close
             if (event.type == Event::Closed) {
                 window.close();
             }
@@ -144,14 +156,15 @@ int main()
                             if(pieces[i].getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition (window).y)) {
                                 move = true;
                                 n = i;
-                                d.x = Mouse::getPosition(window).x - pieces[i].getPosition().x;
-                                d.y = Mouse::getPosition(window).y - pieces[i].getPosition().y;
+                                // d.x = Mouse::getPosition(window).x - pieces[i].getPosition().x;
+                                // d.y = Mouse::getPosition(window).y - pieces[i].getPosition().y;
                                 oldPos = pieces[n].getPosition();
                             }
                         }
                     }
                     else {
                         move = false;
+                        // Capturing the new position for movement
                         for(int i = 0 ; i < 8 ; i++) {
                             for(int j = 0 ; j < 8 ; j++) {
                                 if((Mouse::getPosition(window).x > X+j*spacing && Mouse::getPosition(window).x < X+(j+1)*spacing) && (Mouse::getPosition(window).y > Y+i*spacing && Mouse::getPosition(window).y < Y+(i+1)*spacing)) {
@@ -160,12 +173,15 @@ int main()
                                 }
                             }
                         }
+                        // Have to check here if the move is valid or not
+                        // Making the position of the previous piece as {-100,-100} so that it disappears
                         for(int i = 0 ; i < 32 ; i++) {
                             if(pieces[i].getPosition() == newPos) {
                                 pieces[i].setPosition({-100,-100});
                                 break;
                             }
                         }
+                        // Animation of moving the piece
                         auto dist = newPos - oldPos;
                         for(int i = 0 ; i < 40 ; i++) {
                             window.clear(boardColor);
@@ -175,6 +191,7 @@ int main()
                                 window.draw(pieces[j]);
                             window.display();
                         }
+                        // Setting the new position of the piece
                         pieces[n].setPosition(newPos);
                     }
                 }
