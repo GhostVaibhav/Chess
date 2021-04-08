@@ -24,41 +24,15 @@ jobs:
       run: |
         cmd
         g++ -Isrc/include -c main.cpp
-        xcopy src Builds
+        move "src" "Builds"
         xcopy icon.res Builds
         xcopy main.o Builds
+        dir
         cd Builds
+        dir
         g++ main.o -o main -Lsrc/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system icon.res
         del main.o
     - name: List contents of running directory
       run: dir
     - name: Run
       run: .\main.exe
-#   setup-build:
-#     runs-on: windows-latest
-#     steps:
-#     - run: g++ build.cpp -o build.exe
-#   setup:
-#     needs: setup-build
-#     runs-on: windows-latest
-#     steps:
-#     - run: build.exe main.cpp
-#             xcopy .\main.exe .\Builds\main.exe /c
-#   build:
-#     needs: setup
-#     runs-on: windows-latest
-#     steps:
-#     - run: .\Builds\main.exe
-#   confirm:
-#     needs: build
-#     runs-on: windows-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: configure
-#       run: ./configure
-#     - name: make
-#       run: make
-#     - name: make check
-#       run: make check
-#     - name: make distcheck
-#       run: make distcheck
