@@ -12,12 +12,12 @@ jobs:
   setup-build:
     runs-on: windows-latest
     steps:
-    - run: g++ .\build.cpp -o .\build.exe
+    - run: g++ build.cpp -o build.exe
   setup:
     needs: setup-build
     runs-on: windows-latest
     steps:
-    - run: .\build.exe .\main.cpp
+    - run: build.exe main.cpp
             xcopy .\main.exe .\Builds\main.exe /c
   build:
     needs: setup
