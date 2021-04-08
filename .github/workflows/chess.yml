@@ -18,7 +18,7 @@ jobs:
       run: g++ build.cpp -o build.exe
     - name: Setup-Build
       run: |
-            build.exe main.cpp
+            build main
             xcopy main.exe Builds/ /c
     - name: Run
       run: /Builds/main.exe
