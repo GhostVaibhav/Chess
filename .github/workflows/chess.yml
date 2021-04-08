@@ -23,11 +23,15 @@ jobs:
     - name: Setup-Build
       run: |
         cmd
-        .\b.exe main
+        g++ -Isrc/include -c main.cpp
+        xcopy src Builds
+        xcopy icon.res Builds
+        xcopy main.o Builds
+        cd Builds
+        g++ main.o -o main -Lsrc/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system icon.res
+        del main.o
     - name: List contents of running directory
       run: dir
-    - name: Change directory
-      run: cd Builds
     - name: Run
       run: .\main.exe
 #   setup-build:
