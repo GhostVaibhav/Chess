@@ -21,9 +21,9 @@ jobs:
     - name: List contents of running directory
       run: dir
     - name: Setup-Build
-      run: cmd
-    - name: Setup-Build
-      run: .\b.exe main
+      run: |
+        cmd
+        .\b.exe main
     - name: List contents of running directory
       run: dir
     - name: Change directory
