@@ -9,10 +9,15 @@ on:
     branches: [ master ]
 
 jobs:
+  pre-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
   setup-build:
     runs-on: windows-latest
     steps:
-    - run: g++ build.cpp -o build.exe
+    - run: g++ ./build.cpp -o ./build.exe
   setup:
     needs: setup-build
     runs-on: windows-latest
