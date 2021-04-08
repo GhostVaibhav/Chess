@@ -10,35 +10,43 @@ on:
 
 jobs:
   pre-build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
-  setup-build:
-    runs-on: windows-latest
-    steps:
-    - run: g++ build.cpp -o build.exe
-  setup:
-    needs: setup-build
-    runs-on: windows-latest
-    steps:
-    - run: build.exe main.cpp
-            xcopy .\main.exe .\Builds\main.exe /c
-  build:
-    needs: setup
-    runs-on: windows-latest
-    steps:
-    - run: .\Builds\main.exe
-  confirm:
-    needs: build
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: Build
+      run: g++ build.cpp -o build.exe
+    - name: Setup-Build
+      run: |
+            build.exe main.cpp
+            xcopy main.exe Builds/ /c
+    - name: Run
+      run: /Builds/main.exe
+#   setup-build:
+#     runs-on: windows-latest
+#     steps:
+#     - run: g++ build.cpp -o build.exe
+#   setup:
+#     needs: setup-build
+#     runs-on: windows-latest
+#     steps:
+#     - run: build.exe main.cpp
+#             xcopy .\main.exe .\Builds\main.exe /c
+#   build:
+#     needs: setup
+#     runs-on: windows-latest
+#     steps:
+#     - run: .\Builds\main.exe
+#   confirm:
+#     needs: build
+#     runs-on: windows-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: configure
+#       run: ./configure
+#     - name: make
+#       run: make
+#     - name: make check
+#       run: make check
+#     - name: make distcheck
+#       run: make distcheck
