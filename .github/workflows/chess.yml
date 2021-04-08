@@ -14,8 +14,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
-    - name: Change dir
-      run: cd Chess
+    - name: List contents of running directory
+      run: dir
     - name: Build
       run: g++ buildWorkflow.cpp -o b.exe
     - name: Setup-Build
