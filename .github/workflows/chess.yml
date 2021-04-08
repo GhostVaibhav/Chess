@@ -30,7 +30,7 @@ jobs:
         dir
         cd Builds
         dir
-        g++ main.o -o main -Lsrc/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system icon.res
+        g++ main.o -o main -L "src/lib" -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system icon.res
         del main.o
     - name: List contents of running directory
       run: dir
