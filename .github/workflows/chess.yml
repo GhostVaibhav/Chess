@@ -9,17 +9,17 @@ on:
     branches: [ master ]
 
 jobs:
-  pre-build:
+  Build:
     runs-on: windows-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
     - name: Build
-      run: g++ build.cpp -o build.exe
+      run: g++ buildWorkflow.cpp -o b.exe
     - name: Setup-Build
-      run: build main
+      run: b.exe main
     - name: Run
-      run: /Builds/main.exe
+      run: cd Builds && main.exe
 #   setup-build:
 #     runs-on: windows-latest
 #     steps:
