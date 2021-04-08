@@ -24,8 +24,10 @@ jobs:
       run: .\b.exe main
     - name: List contents of running directory
       run: dir
+    - name: Change directory
+      run: cd Builds
     - name: Run
-      run: cd Builds && main.exe
+      run: .\main.exe
 #   setup-build:
 #     runs-on: windows-latest
 #     steps:
