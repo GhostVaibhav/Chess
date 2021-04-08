@@ -18,8 +18,12 @@ jobs:
       run: dir
     - name: Build
       run: g++ buildWorkflow.cpp -o b.exe
+    - name: List contents of running directory
+      run: dir
     - name: Setup-Build
       run: b.exe main
+    - name: List contents of running directory
+      run: dir
     - name: Run
       run: cd Builds && main.exe
 #   setup-build:
