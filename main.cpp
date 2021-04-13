@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <bits/stdc++.h>
+#include "moves.cpp"
 using namespace sf;
 // For spacing the board and the pieces
 #define X 702.0f
@@ -58,8 +59,12 @@ int main()
     // Font used in the game
     Font game_font;
     game_font.loadFromFile("Fonts/Montserrat-Regular.ttf");
+    ContextSettings settings;
+    settings.antialiasingLevel = 8;
     // Creating a window for containing all the elements
-    RenderWindow window(VideoMode(1200, 600), "Chess");
+    RenderWindow window(VideoMode(1200, 600), "Chess",Style::Close,settings);
+    window.setVerticalSyncEnabled(true);
+    moves::sq a;
     // Limiting the framerate to 60 to decrease the load from GPU
     window.setFramerateLimit(60);
     // Creating a texture and assigning an image to it
@@ -211,6 +216,8 @@ int main()
         // Drawing the pieces on the chess board
         for(int i = 0 ; i < 32 ; i++)
             window.draw(pieces[i]);
+        // Testing the demo code
+        a.demo(&window);
         // Displaying all the sprites that were drawn on the window
         window.display();
     }
