@@ -1,6 +1,6 @@
-# Chess
+# Chess in SFML
 ## Language and framework used
-Developed entirely in **C++** using the **SFML** library
+Developed entirely in **C++** using the **SFML** library and compiled in **Visual Studio Code**.
 ## Supported OS for Automatic Builds
 **Windows**, since the provided SFML library in the repo is for Windows, that too targeting **32-bit** platform, but even if you have a **64-bit** platform you can use the automatic build.
 ## Manual Build
@@ -31,4 +31,9 @@ You can also build multiple files
 Be sure to not build and use **build.cpp** for any other OS except **Windows** as it will be of no use.
 
 ## Behind the scenes
-Why did you choose chess? Why use SFML when there are better alternatives? I know all of this stuff, but I just want to tell you that this is my first public repo and I really didn't have any great ideas back in the day. Any feedbacks or suggestions would be open-handedly accepted.
+Why did you choose **chess**? Why use **SFML** when there are better alternatives like **ImGui**, **GuiLite** or **OpenGL**? I know all of this stuff, but this is my first public repo and I really didn't have any great ideas back in the day. Any feedbacks or suggestions would be open-handedly accepted.
+
+## Motivation
+In short, the chess game! I like it and I have played it a lot in my childhood days.
+
+## 
