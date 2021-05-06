@@ -36,4 +36,3 @@ Why did you choose **chess**? Why use **SFML** when there are better alternative
 ## Motivation
 In short, the chess game! I like it and I have played it a lot in my childhood days.
 
-## 
