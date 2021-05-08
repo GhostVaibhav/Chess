@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <bits/stdc++.h>
-#include "moves.cpp"
+#include "connection.cpp"
 using namespace sf;
 // For spacing the board and the pieces
 #define X 702.0f
 #define Y 75.0f
 // Spacing between the pieces
 #define spacing 51.0f
+#include "moves.cpp"
 // Background board color
 #define boardColor Color(150,100,45,255)
 // Paths to all the files
@@ -48,9 +49,10 @@ void set_position() {
 }
 int main()
 {
+    connectEngine("Engine/stockfish_13.exe");
     // Arp sound used in the background (will probably change in the future)
     SoundBuffer buffer;
-    if(!buffer.loadFromFile("Audio/Arp.wav"))
+    if(!buffer.loadFromFile("Audio/Chess.wav"))
         std::cout << "Error" << std::endl;
     Sound sound;
     sound.setLoop(true);
@@ -140,6 +142,10 @@ int main()
                         std::cout << pieces[i].getGlobalBounds().left << "," << pieces[i].getGlobalBounds().top << "\n";
                     }
                 }
+                if (event.key.code == Keyboard::S) {
+                    std::cout << "Stockfish called manually" << std::endl;
+                    demoWrite();
+                }
                 if (event.key.code == Keyboard::R) {
                     for(int i = 0 ; i < 8 ; i++) {
                         for(int j = 0 ; j < 8 ; j++) {
@@ -221,6 +227,6 @@ int main()
         // Displaying all the sprites that were drawn on the window
         window.display();
     }
-
+    disconnectEngine();
     return 0;
 }
