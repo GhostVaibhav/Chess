@@ -143,7 +143,6 @@ int main()
                     }
                 }
                 if (event.key.code == Keyboard::S) {
-                    std::cout << "Stockfish called manually" << std::endl;
                     demoWrite();
                 }
                 if (event.key.code == Keyboard::R) {
