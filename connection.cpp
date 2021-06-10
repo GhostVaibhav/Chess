@@ -38,14 +38,12 @@ bool connectEngine(std::string PATH) {
 }
 void demoWrite() {
     std::string demo;
-    std::cout << "Inside Demo" << std::endl;
     DWORD write, read, available;
     std::string pos = "position startpos moves e2e4\ngo depth 20\n";
-    std::cout << WriteFile(engine_write_in,pos.c_str(),pos.length(),&write,NULL) << std::endl;
-    std::cout << PeekNamedPipe(engine_read_out,&buffer,bufferSize,&read,&available,NULL) << std::endl;
+    WriteFile(engine_write_in,pos.c_str(),pos.length(),&write,NULL);
+    PeekNamedPipe(engine_read_out,&buffer,bufferSize,&read,&available,NULL);
     do {
         ZeroMemory(buffer,bufferSize);
-        std::cout << "In loop" << std::endl;
         if(!ReadFile(engine_write_out,buffer,bufferSize,&read,NULL) || !read)
             break;
         buffer[read] = 0;
